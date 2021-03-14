@@ -11,10 +11,12 @@ var block15, block16, block17, block18, block19, block20, block21, block22;
 
 var ground1, ground2, ground3;
 
-var slingshot;
+var chain;
 var hex;
 var ball;
 var hexImg;
+
+var score = 0;
 
 function preload() {
 
@@ -24,12 +26,12 @@ function preload() {
 
 function setup() {
 
-  createCanvas(1250,600);
+  createCanvas(1500,600);
   engine = Engine.create();
   world = engine.world;
 
   
-  //strokeWeight(2);
+  strokeWeight(2);
 
   block1 = new Block(600, 260, 30, 40);
   block2 = new Block(570, 260, 30, 40);
@@ -73,17 +75,37 @@ function setup() {
   ball = Bodies.circle(50, 200, 20);
   World.add(world, ball);
 
-  slingshot = new Slingshot(this.ball,{x:150, y:160});
+  chain = new Chain(this.ball,{x:150, y:160});
 
 }
 
 function draw() {
 
-  background("Lavender");
+  background(rgb(120, 61, 23));
 
   Engine.update(engine);
 
-  fill("Lightskyblue");
+  push();
+  textSize(35);
+  fill("white");
+  text("Score : " + score, 1200, 150);
+  pop();
+
+  push();
+  stroke("beige");
+  strokeWeight(4);
+  textSize(30);
+  text("Drag the hexagonal stone and release it to launch it towards the tower blocks and destroy them", 80, 50);
+  pop();
+
+  push();
+  stroke("beige");
+  strokeWeight(2.5);
+  textSize(25);
+  text("All the best", 1200, 500);
+  pop();
+
+  fill(rgb(135, 205, 236));
   block1.display();
   block2.display();
   block3.display();
@@ -96,28 +118,29 @@ function draw() {
   block8.display();
   block9.display();
 
-  fill("Cornflowerblue");
+  fill(rgb(140,140,225));
   bolck10.display();
   block11.display();
   block12.display();
 
-  fill("Lightsteelblue");
+  fill(rgb(170,190,225));
   block13.display();
 
-  fill("springgreen");
+  fill("lime");
   block14.display();
   block15.display();
   block16.display();
   block17.display();
   block18.display();
 
-  fill("mediumspringgreen");
+  fill("lightGreen");
   block19.display();
   block20.display();
   block21.display();
 
-  fill("lightgreen");
+  fill("green");
   block22.display();
+
   ground1.display();
   ground2.display();
   ground3.display();
@@ -125,7 +148,7 @@ function draw() {
   imageMode(CENTER);
   image(hexImg, ball.position.x, ball.position.y, 50, 45);
 
-  slingshot.display();
+  chain.display();
 
 }
 
@@ -139,7 +162,7 @@ function mouseDragged() {
 
 function mouseReleased() {
 
-  slingshot.fly();
+  chain.fly();
 
 }
 
@@ -148,9 +171,7 @@ function keyPressed() {
 
 	if(keyCode === 32) {
 		Matter.Body.setPosition(hex.body, {x:85, y:200})
-		slingshot.attach(hex.body);
+		chain.attach(hex.body);
   }
   
 }
-
-//Made by Divyansha
